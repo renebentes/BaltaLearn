@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BaltaLearn.Models;
+using BaltaLearn.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BaltaLearn.Controllers;
 
@@ -13,9 +15,15 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index([FromServices] ApplicationDbContext context)
     {
-        return View();
+        var courses = await context.Courses
+            .AsNoTracking()
+            .OrderByDescending(course => course.Id)
+            .Skip(0)
+            .Take(4)
+            .ToListAsync();
+        return View(courses);
     }
 
     public IActionResult Privacy()

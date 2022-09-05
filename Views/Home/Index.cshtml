@@ -19,8 +19,8 @@
     {
         <div class="col-md-3">
             <h4>@Html.DisplayFor(modelItem => course.Title)</h4>
-            <p>Duração: </i>@Html.DisplayFor(modelItem => course.DurationInMinutes) minutos</p>
-            <a class="btn btn-info" asp-action="Details" asp-route-id="@course.Id">Mais detalhes</a> |
+            <p>Duração: @Html.DisplayFor(modelItem => course.DurationInMinutes) minutos</p>
+            <a class="btn btn-info" asp-action="Details" asp-route-id="@course.Id">Mais detalhes</a>
         </div>
     }
 </div>

@@ -20,8 +20,8 @@
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">@Html.DisplayFor(modelItem => course.Title)</h4>
-                    <p class="card-text"><i class="bi bi-stopwatch"></i> Duração: @Html.DisplayFor(modelItem => course.DurationInMinutes) minutos</p>
+                    <h4 class="card-title">@course.Title</h4>
+                    <p class="card-text"><i class="bi bi-stopwatch"></i> Duração: @course.DurationInHours.ToString("N2") horas</p>
                     <a class="btn btn-info" asp-controller="Course" asp-action="Details" asp-route-id="@course.Id">Mais detalhes</a>
                 </div>
             </div>

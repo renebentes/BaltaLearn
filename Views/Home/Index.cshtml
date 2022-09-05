@@ -18,9 +18,13 @@
     @foreach(var course in Model)
     {
         <div class="col-md-3">
-            <h4>@Html.DisplayFor(modelItem => course.Title)</h4>
-            <p>Duração: @Html.DisplayFor(modelItem => course.DurationInMinutes) minutos</p>
-            <a class="btn btn-info" asp-action="Details" asp-route-id="@course.Id">Mais detalhes</a>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(modelItem => course.Title)</h4>
+                    <p class="card-text"><i class="bi bi-stopwatch"></i> Duração: @Html.DisplayFor(modelItem => course.DurationInMinutes) minutos</p>
+                    <a class="btn btn-info" asp-controller="Course" asp-action="Details" asp-route-id="@course.Id">Mais detalhes</a>
+                </div>
+            </div>
         </div>
     }
 </div>

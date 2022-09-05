@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BaltaLearn.Entities;
+namespace BaltaLearn.Models;
 
 public abstract class ModelBase
 {

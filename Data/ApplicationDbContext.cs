@@ -12,4 +12,6 @@ public class ApplicationDbContext : IdentityDbContext
     }
 
     public DbSet<Course> Courses { get; set; }
+
+    public DbSet<Module> Module { get; set; }
 }

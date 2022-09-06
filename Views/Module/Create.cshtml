@@ -1,0 +1,41 @@
+﻿@model BaltaLearn.Models.Module
+
+@{
+    ViewData["Title"] = "Novo Módulo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Novo Curso</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Title" class="form-control" />
+                <label asp-for="Title" class="control-label"></label>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label"></label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Order" class="form-control" />
+                <label asp-for="Order" class="control-label"></label>
+                <span asp-validation-for="Order" class="text-danger"></span>
+            </div>
+            <hr class="mb-4">
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a class="btn btn-outline-secondary" asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

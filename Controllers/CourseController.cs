@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BaltaLearn.Data;
 using BaltaLearn.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BaltaLearn.Controllers
 {
@@ -12,34 +13,6 @@ namespace BaltaLearn.Controllers
         public CourseController(ApplicationDbContext context)
         {
             _context = context;
-        }
-
-        // GET: Course
-        public async Task<IActionResult> Index()
-        {
-            return _context.Courses is not null ?
-                        View(await _context.Courses.AsNoTracking().ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Courses' is null.");
-        }
-
-        // GET: Course/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id is null || _context.Courses is null)
-            {
-                return NotFound();
-            }
-
-            var course = await _context.Courses
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (course is null)
-            {
-                return NotFound();
-            }
-
-            return View(course);
         }
 
         // GET: Course/Create
@@ -59,6 +32,64 @@ namespace BaltaLearn.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            return View(course);
+        }
+
+        // GET: Course/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id is null || _context.Courses is null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (course is null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
+        // POST: Course/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Courses is null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Courses' is null.");
+            }
+            var course = await _context.Courses.FindAsync(id);
+            if (course is not null)
+            {
+                _context.Courses.Remove(course);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Course/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id is null || _context.Courses is null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (course is null)
+            {
+                return NotFound();
+            }
+
             return View(course);
         }
 
@@ -113,42 +144,12 @@ namespace BaltaLearn.Controllers
             return View(course);
         }
 
-        // GET: Course/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Course
+        public async Task<IActionResult> Index()
         {
-            if (id is null || _context.Courses is null)
-            {
-                return NotFound();
-            }
-
-            var course = await _context.Courses
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course is null)
-            {
-                return NotFound();
-            }
-
-            return View(course);
-        }
-
-        // POST: Course/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Courses is null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Courses' is null.");
-            }
-            var course = await _context.Courses.FindAsync(id);
-            if (course is not null)
-            {
-                _context.Courses.Remove(course);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return _context.Courses is not null ?
+                        View(await _context.Courses.AsNoTracking().ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Courses' is null.");
         }
 
         private bool CourseExists(int id)
